@@ -1,0 +1,23 @@
+{
+  "name": "erdalceylan/array-join",
+  "description": "Array join",
+  "type": "library",
+  "keywords": ["array", "join", "util", "merge", "sql", "orm"],
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Erdal CEYLAN",
+      "email": "erdalceylan25@gmail.com",
+      "homepage": "https://github.com/erdalceylan"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ArrayJoin\\": "src/ArrayJoin"
+    }
+  },
+  "version": "1.0.0"
+}

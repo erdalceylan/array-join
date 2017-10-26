@@ -1,4 +1,4 @@
-# ![logo](assets/elastic-x-pack.svg) Array Join for PHP 
+# ![logo](assets/elastic-x-pack.png) Array Join for PHP 
 [![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg?style=flat-square)]()
 [![Total Downloads](https://img.shields.io/packagist/dt/erdalceylan/array-join.svg?style=flat-square)]()
 [![Packagist](https://img.shields.io/packagist/l/erdalceylan/array-join.svg?style=flat-square)]()

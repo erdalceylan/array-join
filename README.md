@@ -1,5 +1,5 @@
 # ![logo](assets/elastic-x-pack.png) Array Join for PHP 
-[![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg?style=flat-square)]()
+[![GitHub package version](https://img.shields.io/packagist/v/erdalceylan/array-join.svg?style=flat-square)]()
 [![Total Downloads](https://img.shields.io/packagist/dt/erdalceylan/array-join.svg?style=flat-square)]()
 [![Packagist](https://img.shields.io/packagist/l/erdalceylan/array-join.svg?style=flat-square)]()
 [![Travis](https://img.shields.io/badge/require-PHP%207-brightgreen.svg?style=flat-square)]()

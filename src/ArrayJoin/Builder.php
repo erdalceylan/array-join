@@ -214,7 +214,7 @@ class Builder
         }
 
         foreach ($this->_from->getData() as  $fromRow){
-            $returnArray[] = [$this->_from->getAlias() => $fromRow];
+            $returnArray[] = [$this->_from->getAlias() => (array)$fromRow];
         }
 
         foreach ($this->_join as $joinItem){

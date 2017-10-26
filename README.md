@@ -1,4 +1,4 @@
-#![logo](https://cdn.worldvectorlogo.com/logos/elastic-x-pack.svg) Array Join for PHP 
+# ![logo](assets/elastic-x-pack.svg) Array Join for PHP 
 [![GitHub package version](https://img.shields.io/github/package-json/v/badges/shields.svg?style=flat-square)]()
 [![Total Downloads](https://img.shields.io/packagist/dt/erdalceylan/array-join.svg?style=flat-square)]()
 [![Packagist](https://img.shields.io/packagist/l/erdalceylan/array-join.svg?style=flat-square)]()
@@ -11,9 +11,9 @@
 ```sh
 composer require erdalceylan/array-join
 ```
-#####OR
-composer.jdon
-```json
+##### OR
+composer.json
+```javascript
 {
     "require": {
       "erdalceylan/array-join": "dev-master"
@@ -21,9 +21,9 @@ composer.jdon
 }
 ```
 
-###USAGE
+### USAGE
 
-####data
+#### data
 ```php
 $users = [
     ["id"=>1, "nick"=>"erdal"],

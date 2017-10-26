@@ -6,11 +6,11 @@
  * Time: 15:47
  */
 
-require 'Field.php';
-require 'On.php';
-require 'JoinItem.php';
-require 'Where.php';
-require 'Builder.php';
+require '../src/ArrayJoin/Field.php';
+require '../src/ArrayJoin/On.php';
+require '../src/ArrayJoin/JoinItem.php';
+require '../src/ArrayJoin/Where.php';
+require '../src/ArrayJoin/Builder.php';
 
  $users = [
     ["id"=>1, "nick"=>"erdal"],

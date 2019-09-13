@@ -103,6 +103,7 @@ $instance = \ArrayJoin\Builder::newInstance()
      ->where("a.id", "a.text", function ($fieldFirs, $fieldSecond){
          return $fieldFirs < 10;
      })
+     ->groupBy("a.id", "d.food")
      ->limit(2)
      ->offset(1)
      ->setFetchType(\ArrayJoin\Builder::FETCH_TYPE_OBJECT);

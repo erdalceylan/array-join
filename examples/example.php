@@ -46,17 +46,18 @@ $texts = [
 
 
 $instance = \ArrayJoin\Builder::newInstance()
-    ->select("a.id", "a.nick", "b.item", "d.food", "c.text")
+    ->select("a.id", "a.nick", "b.item", "d.food", "c.text", "b.mmx")
     ->from($users, "a")
     ->innerJoin($items, "b", new \ArrayJoin\On("a.id = b.user_id"))
     ->leftJoin($texts, "c", new \ArrayJoin\On("a.id = c.user_id"))
     ->rightJoin($foods, "d", new \ArrayJoin\On("b.user_id = d.user_id"))
     ->where(function ($id, $text, $item, $food){
-         return $food == 'adana';
+         return $id < 50;
 
      }, "a.id", "c.text", "b.item", "d.food")
      ->limit(20)
      ->offset(0)
+     ->groupBy("a.id", "d.food")
      ->setFetchType(\ArrayJoin\Builder::FETCH_TYPE_OBJECT);
 
  var_export($instance->execute());exit;

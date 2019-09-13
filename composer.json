@@ -3,7 +3,7 @@
   "description": "Array join",
   "type": "library",
   "keywords": ["array", "join", "util", "merge", "sql", "orm"],
-  "license": "GPL-3.0+",
+  "license": "MIT",
   "authors": [
     {
       "name": "Erdal CEYLAN",
@@ -19,5 +19,5 @@
       "ArrayJoin\\": "src/ArrayJoin"
     }
   },
-  "version": "1.0.0"
+  "version": "2.0.0"
 }

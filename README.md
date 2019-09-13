@@ -100,9 +100,9 @@ $instance = \ArrayJoin\Builder::newInstance()
     ->innerJoin($items, "b", new \ArrayJoin\On("a.id = b.user_id"))
     ->leftJoin($texts, "c", new \ArrayJoin\On("a.id = c.user_id"))
     ->rightJoin($foods, "d", new \ArrayJoin\On("b.user_id = d.user_id"))
-     ->where("a.id", "a.text", function ($fieldFirs, $fieldSecond){
-         return $fieldFirs < 10;
-     })
+     ->where(function ($id, $text, $item, $food){
+         return $id < 50;
+     }, "a.id", "c.text", "b.item", "d.food")
      ->groupBy("a.id", "d.food")
      ->limit(2)
      ->offset(1)

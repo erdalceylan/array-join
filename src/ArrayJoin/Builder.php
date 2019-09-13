@@ -15,7 +15,13 @@ namespace ArrayJoin;
  */
 class Builder
 {
+    /**
+     * @var int
+     */
     const FETCH_TYPE_ARRAY = 1;
+    /**
+     * @var int
+     */
     const FETCH_TYPE_OBJECT = 2;
     /**
      * @var Field[]
@@ -33,6 +39,10 @@ class Builder
      * @var Where[]
      */
     private $_where = [];
+    /**
+     * @var Field[]
+     */
+    private $_group = [];
     /**
      * @var int
      */
@@ -76,7 +86,7 @@ class Builder
      * @return Builder
      * @throws \Exception
      */
-    public function from(Array $from , string $alias) : Builder
+    public function from(array $from , string $alias) : Builder
     {
         $this->checkAliases($alias);
 
@@ -95,7 +105,7 @@ class Builder
      * @return Builder
      * @throws \Exception
      */
-    public function innerJoin(Array $innerJoin, string $alias, On $on) : Builder
+    public function innerJoin(array $innerJoin, string $alias, On $on) : Builder
     {
         $this->checkAliases($alias);
 
@@ -115,7 +125,7 @@ class Builder
      * @return Builder
      * @throws \Exception
      */
-    public function leftJoin(Array $leftJoin, string $alias, On $on) : Builder
+    public function leftJoin(array $leftJoin, string $alias, On $on) : Builder
     {
         $this->checkAliases($alias);
 
@@ -135,7 +145,7 @@ class Builder
      * @return Builder
      * @throws \Exception
      */
-    public function rightJoin(Array $rightJoin, string $alias, On $on) : Builder
+    public function rightJoin(array $rightJoin, string $alias, On $on) : Builder
     {
         $this->checkAliases($alias);
 
@@ -151,10 +161,10 @@ class Builder
     /**
      * @param \Closure $closure
      * @param string ...$fields
-     * @return $this
+     * @return Builder
      * @throws \Exception
      */
-    public function where( \Closure $closure, string ...$fields)
+    public function where( \Closure $closure, string ...$fields) : Builder
     {
         $tmpWhere = new Where();
 
@@ -165,6 +175,20 @@ class Builder
         $tmpWhere->setClosure($closure);
 
         $this->_where[] = $tmpWhere;
+
+        return $this;
+    }
+
+    /**
+     * @param string ...$fields
+     * @return Builder
+     * @throws \Exception
+     */
+    public function groupBy(string ...$fields) : Builder
+    {
+        foreach ($fields as $field) {
+            $this->_group[] = Field::parse($field);
+        }
 
         return $this;
     }
@@ -255,6 +279,11 @@ class Builder
             }
         }
 
+        if ($this->_group) {
+
+            $this->_groupBy($returnArray);
+        }
+
         foreach ($returnArray as $key => $value){
             $returnArray[$key] = $this->fieldNormalize($value);
         }
@@ -278,7 +307,7 @@ class Builder
      * @param array $leftArray
      * @param JoinItem $joinItem
      */
-    private function _innerJoin(Array &$leftArray, JoinItem $joinItem)
+    private function _innerJoin(array &$leftArray, JoinItem $joinItem)
     {
         $tmpArray = [];
         $onFieldForJoin = $joinItem->getOnFieldForJoin();
@@ -309,7 +338,7 @@ class Builder
      * @param array $leftArray
      * @param JoinItem $joinItem
      */
-    private function _leftJoin(Array &$leftArray, JoinItem $joinItem)
+    private function _leftJoin(array &$leftArray, JoinItem $joinItem)
     {
         $tmpArray = [];
         $onFieldForJoin = $joinItem->getOnFieldForJoin();
@@ -347,7 +376,7 @@ class Builder
      * @param array $leftArray
      * @param JoinItem $joinItem
      */
-    private function _rightJoin(Array &$leftArray, JoinItem $joinItem)
+    private function _rightJoin(array &$leftArray, JoinItem $joinItem)
     {
         $tmpArray = [];
         $onFieldForJoin = $joinItem->getOnFieldForJoin();
@@ -379,6 +408,46 @@ class Builder
         }
 
         $leftArray = $tmpArray;
+    }
+
+    /**
+     * @param array $returnArray
+     */
+    private function _groupBy(array &$returnArray) {
+
+        $groupedArray = [];
+
+        foreach ($returnArray as $row) {
+
+            $groupKey = [];
+
+            foreach ($this->_group as $field) {
+
+
+                if (array_key_exists($field->getAlias(), $row)) {
+
+                    $groupKey[] = $field->getAlias();
+
+                    if (array_key_exists($field->getField() ,$row[$field->getAlias()])) {
+
+                        $groupKey[] = $field->getField();
+                        $groupKey[] = $row[$field->getAlias()][$field->getField()];
+                    }
+
+                }else{
+                    $groupKey[] = "null";
+                }
+            }
+
+            $_groupKey = implode(".", $groupKey);
+
+            if (!array_key_exists($_groupKey,  $groupedArray)) {
+
+                $groupedArray[$_groupKey] = $row;
+            }
+        }
+
+        $returnArray = array_values($groupedArray);
     }
 
     /**
@@ -422,7 +491,7 @@ class Builder
      * @param array $row
      * @return array|object
      */
-    private function fieldNormalize(Array $row)
+    private function fieldNormalize(array $row)
     {
         $fillNull = array_fill_keys($this->getSelectedFields(null, true), null);
         $normalizedRow = [];

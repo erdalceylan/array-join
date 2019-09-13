@@ -93,7 +93,7 @@ class JoinItem
     /**
      * @return array
      */
-    public function getData(): Array
+    public function getData(): array
     {
         return $this->data;
     }
@@ -102,7 +102,7 @@ class JoinItem
      * @param $data
      * @return JoinItem
      */
-    public function setData(Array $data): JoinItem
+    public function setData(array $data): JoinItem
     {
         $this->data = $data;
         return $this;
@@ -113,7 +113,8 @@ class JoinItem
      */
     public function getOnFieldForSelf(){
 
-        return $this->getOn()->getFieldOne()->getAlias() == $this->getAlias() ? $this->getOn()->getFieldOne() : $this->getOn()->getFieldTwo();
+        return $this->getOn()->getFieldOne()->getAlias() == $this->getAlias()
+            ? $this->getOn()->getFieldOne() : $this->getOn()->getFieldTwo();
     }
 
     /**
@@ -121,7 +122,8 @@ class JoinItem
      */
     public function getOnFieldForJoin(){
 
-        return $this->getOn()->getFieldOne()->getAlias() != $this->getAlias() ? $this->getOn()->getFieldOne() : $this->getOn()->getFieldTwo();
+        return $this->getOn()->getFieldOne()->getAlias() != $this->getAlias()
+            ? $this->getOn()->getFieldOne() : $this->getOn()->getFieldTwo();
     }
 
 }

@@ -61,8 +61,9 @@ class Field
     }
 
     /**
-     * @param \string[] ...$fields
+     * @param \string ...$fields
      * @return Field[]
+     * @throws \Exception
      */
     public static function select(string ...$fields)
     {

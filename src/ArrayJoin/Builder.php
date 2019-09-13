@@ -59,8 +59,9 @@ class Builder
     }
 
     /**
-     * @param \string[] ...$fields
+     * @param \string[] $fields
      * @return Builder
+     * @throws \Exception
      */
     public function select(string ...$fields ) : Builder
     {
@@ -73,6 +74,7 @@ class Builder
      * @param array $from
      * @param string $alias
      * @return Builder
+     * @throws \Exception
      */
     public function from(Array $from , string $alias) : Builder
     {
@@ -91,6 +93,7 @@ class Builder
      * @param string $alias
      * @param On $on
      * @return Builder
+     * @throws \Exception
      */
     public function innerJoin(Array $innerJoin, string $alias, On $on) : Builder
     {
@@ -110,6 +113,7 @@ class Builder
      * @param string $alias
      * @param On $on
      * @return Builder
+     * @throws \Exception
      */
     public function leftJoin(Array $leftJoin, string $alias, On $on) : Builder
     {
@@ -129,6 +133,7 @@ class Builder
      * @param string $alias
      * @param On $on
      * @return Builder
+     * @throws \Exception
      */
     public function rightJoin(Array $rightJoin, string $alias, On $on) : Builder
     {
@@ -148,6 +153,7 @@ class Builder
      * @param string $fieldTwo
      * @param \Closure $closure
      * @return $this
+     * @throws \Exception
      */
     public function where(string $fieldOne, string $fieldTwo, \Closure $closure)
     {

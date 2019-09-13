@@ -32,7 +32,7 @@ class JoinItem
      */
     private $on;
     /**
-     * @var Array
+     * @var array
      */
     private $data;
 
@@ -91,7 +91,7 @@ class JoinItem
     }
 
     /**
-     * @return Array
+     * @return array
      */
     public function getData(): Array
     {

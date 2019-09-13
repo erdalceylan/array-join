@@ -16,51 +16,39 @@ namespace ArrayJoin;
 class Where
 {
     /**
-     * @var Field
+     * @var Field[]
      */
-    private $fieldOne;
-    /**
-     * @var Field
-     */
-    private $fieldTwo;
+    private $fields = [];
     /**
      * @var \Closure
      */
     private $closure;
 
     /**
-     * @return Field
+     * @return Field[]
      */
-    public function getFieldOne(): Field
+    public function getFields(): array
     {
-        return $this->fieldOne;
+        return $this->fields;
     }
 
     /**
-     * @param Field $fieldOne
+     * @param Field $field
      * @return Where
      */
-    public function setFieldOne(Field $fieldOne): Where
+    public function addField(Field $field): Where
     {
-        $this->fieldOne = $fieldOne;
+        $this->fields[] = $field;
         return $this;
     }
 
     /**
-     * @return Field
-     */
-    public function getFieldTwo(): Field
-    {
-        return $this->fieldTwo;
-    }
-
-    /**
-     * @param Field $fieldTwo
+     * @param Field ...$fields
      * @return Where
      */
-    public function setFieldTwo(Field $fieldTwo): Where
+    public function setFields(Field ...$fields): Where
     {
-        $this->fieldTwo = $fieldTwo;
+        $this->fields = $fields;
         return $this;
     }
 
@@ -88,22 +76,22 @@ class Where
      */
     public function is(Array $row)
     {
-        $param1 = null;
-        $param2 = null;
+        $params = [];
 
-        if($this->getFieldOne() instanceof  Field && array_key_exists($this->getFieldOne()->getAlias(), $row)){
-            if(array_key_exists($this->getFieldOne()->getField(), $row[$this->getFieldOne()->getAlias()])){
-                $param1 = $row[$this->getFieldOne()->getAlias()][$this->getFieldOne()->getField()];
-            }
+        foreach ($this->fields as $field) {
+
+            $tmpParam = null;
+
+           if (array_key_exists($field->getAlias(), $row)) {
+               if(array_key_exists($field->getField(), $row[$field->getAlias()])){
+                   $tmpParam = $row[$field->getAlias()][$field->getField()];
+               }
+           }
+
+           $params[] = $tmpParam;
         }
 
-        if($this->getFieldTwo() instanceof  Field && array_key_exists($this->getFieldTwo()->getAlias(), $row)){
-            if(array_key_exists($this->getFieldTwo()->getField(), $row[$this->getFieldTwo()->getAlias()])){
-                $param2 = $row[$this->getFieldTwo()->getAlias()][$this->getFieldTwo()->getField()];
-            }
-        }
-
-        return (bool) $this->getClosure()($param1, $param2);
+        return (bool) $this->getClosure()(...$params);
     }
 
 }

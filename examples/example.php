@@ -35,6 +35,7 @@ require '../src/ArrayJoin/Builder.php';
 $foods = [
     ["user_id"=>1, "food"=>"iskender"],
     ["user_id"=>2, "food"=>"adana"],
+    ["user_id"=>5, "food"=>"adana"],
 ];
 
 $texts = [
@@ -45,16 +46,17 @@ $texts = [
 
 
 $instance = \ArrayJoin\Builder::newInstance()
-    ->select("a.id", "a.nick", "b.item", "d.food")
+    ->select("a.id", "a.nick", "b.item", "d.food", "c.text")
     ->from($users, "a")
     ->innerJoin($items, "b", new \ArrayJoin\On("a.id = b.user_id"))
     ->leftJoin($texts, "c", new \ArrayJoin\On("a.id = c.user_id"))
     ->rightJoin($foods, "d", new \ArrayJoin\On("b.user_id = d.user_id"))
-     ->where("a.id", "a.text", function ($fieldFirs, $fieldSecond){
-         return $fieldFirs < 10;
-     })
-     ->limit(2)
-     ->offset(1)
+    ->where(function ($id, $text, $item, $food){
+         return $food == 'adana';
+
+     }, "a.id", "c.text", "b.item", "d.food")
+     ->limit(20)
+     ->offset(0)
      ->setFetchType(\ArrayJoin\Builder::FETCH_TYPE_OBJECT);
 
  var_export($instance->execute());exit;

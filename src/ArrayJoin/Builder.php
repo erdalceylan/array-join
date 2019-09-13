@@ -149,18 +149,22 @@ class Builder
     }
 
     /**
-     * @param string $fieldOne
-     * @param string $fieldTwo
      * @param \Closure $closure
+     * @param string ...$fields
      * @return $this
      * @throws \Exception
      */
-    public function where(string $fieldOne, string $fieldTwo, \Closure $closure)
+    public function where( \Closure $closure, string ...$fields)
     {
-        $this->_where[] = (new Where())
-            ->setFieldOne(Field::parse($fieldOne))
-            ->setFieldTwo(Field::parse($fieldTwo))
-            ->setClosure($closure);
+        $tmpWhere = new Where();
+
+        foreach ($fields as $field) {
+            $tmpWhere->addField(Field::parse($field));
+        }
+
+        $tmpWhere->setClosure($closure);
+
+        $this->_where[] = $tmpWhere;
 
         return $this;
     }

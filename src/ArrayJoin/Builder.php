@@ -313,13 +313,14 @@ class Builder
         $onFieldForJoin = $joinItem->getOnFieldForJoin();
         $onFieldForSelf = $joinItem->getOnFieldForSelf();
 
-        foreach ($joinItem->getData() as $d){
+        foreach ($leftArray as $key => &$value){
 
-            $datum = (array) $d;
+            if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
 
-            foreach ($leftArray as $key => &$value){
+                foreach ($joinItem->getData() as $d){
 
-                if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
+                    $datum = (array) $d;
+
                     if( array_key_exists($onFieldForSelf->getField(), $datum)){
 
                         if($datum[$onFieldForSelf->getField()] == $value[$onFieldForJoin->getAlias()][$onFieldForJoin->getField()]){
@@ -348,11 +349,12 @@ class Builder
 
             $foundMergedRow = false;
 
-            foreach ($joinItem->getData() as $d){
+            if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
 
-                $datum = (array) $d;
+                foreach ($joinItem->getData() as $d){
 
-                if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
+                    $datum = (array) $d;
+
                     if( array_key_exists($onFieldForSelf->getField(), $datum)){
 
                         if($datum[$onFieldForSelf->getField()] == $value[$onFieldForJoin->getAlias()][$onFieldForJoin->getField()]){
@@ -388,10 +390,11 @@ class Builder
 
             $foundMergedRow = false;
 
-            foreach ($leftArray as $key => &$value){
+            if( array_key_exists($onFieldForSelf->getField(), $datum)){
 
-                if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
-                    if( array_key_exists($onFieldForSelf->getField(), $datum)){
+                foreach ($leftArray as $key => &$value){
+
+                    if(array_key_exists($onFieldForJoin->getAlias(), $value) && array_key_exists($onFieldForJoin->getField(), $value[$onFieldForJoin->getAlias()])){
 
                         if($datum[$onFieldForSelf->getField()] == $value[$onFieldForJoin->getAlias()][$onFieldForJoin->getField()]){
 
